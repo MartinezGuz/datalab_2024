@@ -1,0 +1,37 @@
+---
+title: "Sewanee Climate"
+author: "Perla G.Martinez"
+date: "2024-06-12"
+output: html_document
+---
+
+```{r setup, include=FALSE}
+knitr::opts_chunk$set(echo = FALSE, message = FALSE, warnings = FALSE)
+library(lubridate)
+ library (ggplot2)
+library(readr)
+library(tidyverse)
+sewanee_weather <- read_csv("C:/Users/pguzm/Desktop/perla_datalab/datalab_2024/climate_sewanee/sewanee_weather.csv")
+View(sewanee_weather)
+```
+
+
+## Effect of TMAX temperature on percipitation from 2010 to 2020
+
+```{r}
+weather_10_20 <- sewanee_weather %>% 
+  mutate(year = year(DATE) ) %>% 
+  filter (year>= 2010&2020, na.rm = TRUE) %>% 
+  select(DATE,PRCP,TMAX)
+weather_10_20 <- na.omit(weather_10_20)
+  
+
+```
+
+
+```{r}
+ggplot(weather_10_20,aes(x = DATE, y = PRCP, color = TMAX )) +
+  geom_line () +
+  labs (title= "Correlation")
+```
+
