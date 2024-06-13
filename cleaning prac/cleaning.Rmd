@@ -1,0 +1,56 @@
+---
+title: "Messy"
+author: "Perla G.Martinez"
+date: "2024-06-13"
+output: html_document
+---
+
+```{r setup, include=FALSE}
+knitr::opts_chunk$set(echo = TRUE)
+library(tidyverse)
+library(dplyr)
+library(readr)
+dives <- read_csv('https://raw.githubusercontent.com/databrew/intro-to-data-science/main/data/whales-dives.csv')
+
+head(dives)
+
+messy_dives <- read_csv('https://raw.githubusercontent.com/databrew/intro-to-data-science/main/data/whales-dives-messy.csv')
+
+head(messy_dives)
+
+```
+
+## R Markdown
+
+```{r}
+names(messy_dives)
+names(messy_dives) <- c(
+                         "species", 
+                         "behavior",  
+                         "prey.volume", 
+                         "prey.depth", 
+                         "dive.time",
+                         "surface.time",
+                         "blow.interval",
+                         "blow.number",
+                         "YEAR",            
+                         "Month",
+                         "Day",             
+                         "sit"  )    
+```
+
+```{r}
+messy_dives <- messy_dives %>%
+  mutate(Month = str_pad(Month, width="2", side="left", pad="0")) %>%
+  mutate(Day = str_pad(Day, width="2", side="left", pad="0"))  %>%
+  mutate(year_num = nchar(YEAR),
+         YEAR=ifelse(year_num == 4, YEAR,  str_pad(YEAR, width="3", side="left", pad="0")))  %>%
+  mutate(year_num = nchar(YEAR),
+         YEAR=ifelse(year_num == 4, YEAR,  str_pad(YEAR, width="4", side="left", pad="2"))) %>% 
+  mutate (sit = substr(sit, 10,12)) %>% 
+  mutate (id =  paste0 (YEAR,Month,Day,sit) ) %>% 
+  select("id", "species", "behavior", "prey.volume","prey.depth", "dive.time","surface.time","blow.interval", "blow.number")  
+  
+  
+```
+
