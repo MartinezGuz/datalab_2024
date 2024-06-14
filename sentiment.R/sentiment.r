@@ -59,3 +59,21 @@ word_freq <- words %>%
   tally()
 # make word cloud 
 wordcloud2(word_freq)
+
+# Run the below to create an object named sw.
+
+sw <- read_csv('https://raw.githubusercontent.com/databrew/intro-to-data-science/main/data/stopwords.csv')
+
+#. Remove from word_freq any rows in which the word appears in sw.
+
+no_dupe <- word_freq %>% 
+  filter(!word%in%sw$word)
+#Make a new word cloud.
+
+wordcloud2(no_dupe)
+
+#Make an object with the top 10 words used only. Name this object top10.
+
+no_dupe <- word_freq %>% 
+  
+  
